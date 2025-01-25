@@ -32,7 +32,7 @@ def generate_dispute():
         ]
 
         logging.info("Calling OpenAI API...")
-        response = openai.ChatCompletion.create(
+        response = openai.Chat.create(
             model="gpt-3.5-turbo",
             messages=messages,
             max_tokens=350,
