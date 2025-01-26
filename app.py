@@ -39,8 +39,8 @@ def generate_dispute():
         ]
         print(f"Generated OpenAI messages: {messages}")
 
-        # Call OpenAI Chat Completion API using the new interface
-        response = openai.chat.create(
+        # Call OpenAI Chat Completion API (correctly under openai>=1.0.0)
+        response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=messages,
             max_tokens=350,
@@ -58,6 +58,7 @@ def generate_dispute():
         # Handle OpenAI API-specific errors
         print(f"OpenAI API Error: {str(e)}")
         return jsonify({"error": "OpenAI API Error", "details": str(e)}), 500
+
     except Exception as e:
         # Handle all other unexpected errors
         print(f"Unexpected Error: {str(e)}")
