@@ -49,21 +49,19 @@ def generate_dispute():
         print(f"OpenAI API Response: {response}")
 
         # Extract the generated letter
-        if "choices" not in response or not response['choices']:
-            print("Unexpected response format from OpenAI API")
-            return jsonify({"error": "OpenAI API returned an unexpected response"}), 500
-
         dispute_letter = response['choices'][0]['message']['content'].strip()
         print(f"Generated dispute letter: {dispute_letter}")
 
         return jsonify({"dispute_letter": dispute_letter}), 200
 
-    except openai.error.OpenAIError as e:
+    except openai.OpenAIError as e:
+        # Handle OpenAI API-specific errors
         print(f"OpenAI API Error: {str(e)}")
-        return jsonify({"error": f"OpenAI API Error: {str(e)}"}), 500
+        return jsonify({"error": "OpenAI API Error", "details": str(e)}), 500
     except Exception as e:
+        # Handle all other unexpected errors
         print(f"Unexpected Error: {str(e)}")
-        return jsonify({"error": "Internal Server Error"}), 500
+        return jsonify({"error": "Internal Server Error", "details": str(e)}), 500
 
 
 if __name__ == "__main__":
