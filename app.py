@@ -39,8 +39,8 @@ def generate_dispute():
         ]
         print(f"Generated OpenAI messages: {messages}")
 
-        # Call OpenAI Chat Completion API
-        response = openai.ChatCompletion.create(
+        # Call OpenAI Chat Completion API using the new interface
+        response = openai.chat.create(
             model="gpt-3.5-turbo",
             messages=messages,
             max_tokens=350,
@@ -49,7 +49,7 @@ def generate_dispute():
         print(f"OpenAI API Response: {response}")
 
         # Extract the generated letter
-        dispute_letter = response['choices'][0]['message']['content'].strip()
+        dispute_letter = response["choices"][0]["message"]["content"].strip()
         print(f"Generated dispute letter: {dispute_letter}")
 
         return jsonify({"dispute_letter": dispute_letter}), 200
